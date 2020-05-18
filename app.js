@@ -1,8 +1,6 @@
 let tictactoe = {
     areaOfGame: 5,
     cells: $('#area .cell'),
-    arr: [],
-
 
     _init: function () {
         this.registeredEvents()
@@ -25,35 +23,44 @@ let tictactoe = {
 
     onAreaClick: function () {
         $(this).addClass('is-cross')
+        tictactoe.isCrossAround($(this).data('row'), $(this).data('column'))
 
-        let cellRowAndColumnNumber = []
-        cellRowAndColumnNumber.push($(this).data('row'))
-        cellRowAndColumnNumber.push($(this).data('column'))
-        tictactoe.arr.push(cellRowAndColumnNumber)
-        tictactoe.checkWin(tictactoe.arr)
     },
 
-    checkWin: function (arr) {
-        console.log(arr)
-        let winLengthRow = 1
-        let winLengthColumn = 1
-
-        if (arr.length < 3) {
-        } else {
-            for (let i = 0; i < arr.length; i++) {
-                console.log("Komórka z numerem " + arr[i])
-                if (arr[i][0] === arr[i + 1][0] && (Math.abs(arr[i][1] - arr[i + 1][1]) === 1)) {
-                    console.log("Wygrana wiersze")
-                    winLengthRow++
-                    console.log(winLengthRow + '-wiersze ' + winLengthColumn + '-kolumny')
-                } else if (arr[i][1] === arr[i + 1][1] && (Math.abs(arr[i][0] - arr[i + 1][0]) === 1)) {
-                    console.log("Wygrana kolumny")
-                    winLengthColumn++
-                    console.log(winLengthRow + '-wiersze ' + winLengthColumn + '-kolumny')
-                }
-            }
+    isCrossAround: function (row, column) {
+        let length = 1
+        console.log(row, column)
+        if (tictactoe.getCell(row + 1, column).hasClass('is-cross')) {
+            length++
+            console.log("row +1")
+        } else if (tictactoe.getCell(row, column + 1).hasClass('is-cross')) {
+            length++
+            console.log("column +1")
+        } else if (tictactoe.getCell(row + 1, column - 1).hasClass('is-cross') && $('.cell').data('column', column + 1).hasClass('is-cross')) {
+            length++
+            console.log("row+1 + column-1")
+        } else if (tictactoe.getCell(row, column - 1).hasClass('is-cross')) {
+            length++
+            console.log("row + column-1")
+        } else if (tictactoe.getCell(row - 1, column).hasClass('is-cross')) {
+            length++
+            console.log("row -1 + column")
+        } else if (tictactoe.getCell(row - 1, column - 1).hasClass('is-cross')) {
+            length++
+            console.log("column -1 + column -1")
+        } else if (tictactoe.getCell(row - 1, column + 1).hasClass('is-cross')) {
+            length++
+            console.log("column -1 + column +1")
+        } else if (tictactoe.getCell(row + 1, column + 1).hasClass('is-cross')) {
+            length++
+            console.log("column +1 + column +1")
         }
+        console.log("Długość to " + length)
     },
+
+    getCell: function (row, column) {
+        return $('#area .cell[data-row="' + row + '"][data-column=' + column + ']');
+    }
 }
 
 tictactoe._init()

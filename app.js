@@ -25,98 +25,100 @@ let tictactoe = {
 
     onAreaClick: function () {
         $(this).addClass('is-cross')
-        tictactoe.checkArea()
-        // tictactoe.isCrossAround($(this).data('row'), $(this).data('column'))
-        // if (tictactoe.isCrossAround(1, 1) >= tictactoe.numberOfCellsToWin) {
-        //     alert("wygrana")
-        // }
-
-
+        if (tictactoe.isCrossAround(1, 1, 1) >= tictactoe.numberOfCellsToWin) {
+            alert("wygrana")
+        }
     },
 
-    isCrossAround: function (i, j) {
-        if (tictactoe.getCell(i - 1, j - 1 || i - 1, j || i - 1, j + 1 || i, j - 1 || i, j + 1 || i + 1, j - 1 || i + 1, j || i + 1, j + 1).hasClass('is-cross')) {
-            return true
+    isCrossAround: function (a, b, lgh) {
+        if (a >= tictactoe.areaOfGame) {
+            a = 1
+            b = b + 1
         }
+        if (a === tictactoe.areaOfGame && b === tictactoe.areaOfGame) {
+            return
+        }
+        let length = lgh
 
-        // let length = 1
-        //
-        // for (let i = x; i <= tictactoe.areaOfGame; i++) {
-        //     for (let j = y; j <= tictactoe.areaOfGame; j++) {
-        //         if (tictactoe.getCell(i - 1, j - 1 || i -1, j || i -1, j+1 || i, j -1 || i, j+1 || i + 1, j - 1 || i +1, j || i+1, j+1).hasClass('is-cross')) {
-        //             length++
-        //             if (length === tictactoe.numberOfCellsToWin) return length
-        //         }
-
-        // if (tictactoe.getCell(i, j).hasClass('is-cross')) {
-        //     if (tictactoe.getCell(i + 1, j).hasClass('is-cross')) {
-        //         for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
-        //             if (tictactoe.getCell(i + k, j).hasClass('is-cross') && tictactoe.getCell(i + k + 1, j).hasClass('is-cross')) {
-        //                 length++
-        //                 if (length === 3) return length
-        //             }
-        //             console.log("row +1" + length)
-        //         }
-        //     } else if (tictactoe.getCell(i, j + 1).hasClass('is-cross')) {
-        //         for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
-        //             if (tictactoe.getCell(i, j + k).hasClass('is-cross') && tictactoe.getCell(i, j + k + 1).hasClass('is-cross')) {
-        //                 length++
-        //                 if (length === 3) return length
-        //             }
-        //             console.log("column +1" + length)
-        //         }
-        //     } else if (tictactoe.getCell(i + 1, j - 1).hasClass('is-cross')) {
-        //         for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
-        //             if (tictactoe.getCell(i + k, j - k).hasClass('is-cross') && tictactoe.getCell(i + k + 1, j - k -1).hasClass('is-cross')) {
-        //                 length++
-        //                 if (length === 3) return length
-        //             }
-        //             console.log("row+1 + column-1" + length)
-        //         }
-        //     } else if (tictactoe.getCell(i, j - 1).hasClass('is-cross')) {
-        //         for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
-        //             if (tictactoe.getCell(i, j - k).hasClass('is-cross') && tictactoe.getCell(i, j - k -1).hasClass('is-cross')) {
-        //                 length++
-        //                 if (length === 3) return length
-        //             }
-        //             console.log("row + column-1" + length)
-        //         }
-        //     } else if (tictactoe.getCell(i - 1, j).hasClass('is-cross')) {
-        //         for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
-        //             if (tictactoe.getCell(i - k, j).hasClass('is-cross') && tictactoe.getCell(i - k -1, j).hasClass('is-cross')) {
-        //                 length++
-        //                 if (length === 3) return length
-        //             }
-        //             console.log("row -1 + column")
-        //         }
-        //     } else if (tictactoe.getCell(i - 1, j - 1).hasClass('is-cross')) {
-        //         for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
-        //             if (tictactoe.getCell(i - k, j - k).hasClass('is-cross') && tictactoe.getCell(i - k- 1, j - k - 1).hasClass('is-cross')) {
-        //                 length++
-        //                 if (length === 3) return length
-        //             }
-        //             console.log("column -1 + column -1" + length)
-        //         }
-        //     } else if (tictactoe.getCell(i - 1, j + 1).hasClass('is-cross')) {
-        //         for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
-        //             if (tictactoe.getCell(i - k, j + k).hasClass('is-cross') && tictactoe.getCell(i - k - 1, j + k + 1).hasClass('is-cross')) {
-        //                 length++
-        //                 if (length === 3) return length
-        //             }
-        //             console.log("column -1 + column +1" + length)
-        //         }
-        //     } else if (tictactoe.getCell(i + 1, j + 1).hasClass('is-cross')) {
-        //         for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
-        //             if (tictactoe.getCell(i + k, j + k).hasClass('is-cross') && tictactoe.getCell(i + k + 1, j + k + 1).hasClass('is-cross')) {
-        //                 length++
-        //                 if (length === 3) return length
-        //             }
-        //             console.log("column +1 + column +1" + length)
-        //         }
-        //     }
-        // }
-        //     }
-        // }
+        for (let i = a; i <= tictactoe.areaOfGame; i++) {
+            for (let j = b; j <= tictactoe.areaOfGame; j++) {
+                if (tictactoe.getCell(i, j).hasClass('is-cross')) {
+                    if (tictactoe.getCell(i + 1, j).hasClass('is-cross')) {
+                        for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
+                            if (tictactoe.getCell(i + k, j).hasClass('is-cross') && tictactoe.getCell(i + k + 1, j).hasClass('is-cross')) {
+                                length++
+                                if (length === 3) return length
+                            } else {
+                                tictactoe.isCrossAround(i, j + 1, 1)
+                            }
+                        }
+                    } else if (tictactoe.getCell(i, j + 1).hasClass('is-cross')) {
+                        for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
+                            if (tictactoe.getCell(i, j + k).hasClass('is-cross') && tictactoe.getCell(i, j + k + 1).hasClass('is-cross')) {
+                                length++
+                                if (length === 3) return length
+                            } else {
+                                tictactoe.isCrossAround(i, j + 1, 1)
+                            }
+                        }
+                    } else if (tictactoe.getCell(i + 1, j - 1).hasClass('is-cross')) {
+                        for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
+                            if (tictactoe.getCell(i + k, j - k).hasClass('is-cross') && tictactoe.getCell(i + k + 1, j - k - 1).hasClass('is-cross')) {
+                                length++
+                                if (length === 3) return length
+                            } else {
+                                tictactoe.isCrossAround(i, j + 1, 1)
+                            }
+                        }
+                    } else if (tictactoe.getCell(i, j - 1).hasClass('is-cross')) {
+                        for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
+                            if (tictactoe.getCell(i, j - k).hasClass('is-cross') && tictactoe.getCell(i, j - k - 1).hasClass('is-cross')) {
+                                length++
+                                if (length === 3) return length
+                            } else {
+                                tictactoe.isCrossAround(i, j + 1, 1)
+                            }
+                        }
+                    } else if (tictactoe.getCell(i - 1, j).hasClass('is-cross')) {
+                        for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
+                            if (tictactoe.getCell(i - k, j).hasClass('is-cross') && tictactoe.getCell(i - k - 1, j).hasClass('is-cross')) {
+                                length++
+                                if (length === 3) return length
+                            } else {
+                                tictactoe.isCrossAround(i, j + 1, 1)
+                            }
+                        }
+                    } else if (tictactoe.getCell(i - 1, j - 1).hasClass('is-cross')) {
+                        for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
+                            if (tictactoe.getCell(i - k, j - k).hasClass('is-cross') && tictactoe.getCell(i - k - 1, j - k - 1).hasClass('is-cross')) {
+                                length++
+                                if (length === 3) return length
+                            } else {
+                                tictactoe.isCrossAround(i, j + 1, 1)
+                            }
+                        }
+                    } else if (tictactoe.getCell(i - 1, j + 1).hasClass('is-cross')) {
+                        for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
+                            if (tictactoe.getCell(i - k, j + k).hasClass('is-cross') && tictactoe.getCell(i - k - 1, j + k + 1).hasClass('is-cross')) {
+                                length++
+                                if (length === 3) return length
+                            } else {
+                                tictactoe.isCrossAround(i, j + 1, 1)
+                            }
+                        }
+                    } else if (tictactoe.getCell(i + 1, j + 1).hasClass('is-cross')) {
+                        for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
+                            if (tictactoe.getCell(i + k, j + k).hasClass('is-cross') && tictactoe.getCell(i + k + 1, j + k + 1).hasClass('is-cross')) {
+                                length++
+                                if (length === 3) return length
+                            } else {
+                                tictactoe.isCrossAround(i, j + 1, 1)
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         // if (tictactoe.getCell(row + 1, column).hasClass('is-cross')) {
         //     length++
@@ -184,19 +186,6 @@ let tictactoe = {
         //     console.log("column +1 + column +1")
         // }
 
-    },
-
-    checkArea: function () {
-
-        for (let i = 1; i < tictactoe.areaOfGame; i++) {
-            for (let j = 1; j < tictactoe.areaOfGame; j++) {
-                if (tictactoe.isCrossAround(i, j) === true) {
-                    tictactoe.theLongestLine++
-                    let direction = tictactoe.getDirection(i,j)
-
-                }
-            }
-        }
     },
 
     getDirection: function (i, j) {

@@ -11,6 +11,7 @@ let tictactoe = {
     registeredEvents: function () {
         this.creatingAreaGame(this.areaOfGame, this.areaOfGame)
         $('#area .cell').on('click', this.onAreaClick)
+        $('#clearArea').click(this.getClearArea)
     },
 
     creatingAreaGame: function (areaOfGameRows, areaOfGameColumns) {
@@ -30,6 +31,9 @@ let tictactoe = {
             for (let y = 1; y <= tictactoe.areaOfGame; y++) {
                 if (tictactoe.isCrossAround(x, y) === tictactoe.numberOfCellsToWin) {
                     alert("wygrana")
+                    console.log(x,y)
+                    console.log("here")
+                    break
                 }
             }
         }
@@ -107,13 +111,17 @@ let tictactoe = {
             if  (firstLength === win || secondLength === win || thirdLength === win || fourthLength === win || fifthLength === win || sixthLength === win || seventhLength === win || eighthLength === win){
                 return win
             }
-            console.log(firstLength, secondLength, thirdLength, fourthLength, fifthLength, sixthLength, seventhLength, eighthLength,i,j)
+            // console.log(firstLength, secondLength, thirdLength, fourthLength, fifthLength, sixthLength, seventhLength, eighthLength,i,j)
         }
     },
 
     getCell: function (row, column) {
         return $('#area .cell[data-row="' + row + '"][data-column=' + column + ']');
-    }
+    },
+
+    getClearArea: function () {
+        $('.cell').removeClass("is-cross")
+    },
 }
 
 tictactoe._init()

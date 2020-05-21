@@ -3,15 +3,21 @@ let tictactoe = {
     numberOfCellsToWin: 3,
     cells: $('#area .cell'),
     theLongestLine: 0,
+    endGame: false,
 
     _init: function () {
         this.registeredEvents()
     },
 
     registeredEvents: function () {
-        this.creatingAreaGame(this.areaOfGame, this.areaOfGame)
-        $('#area .cell').on('click', this.onAreaClick)
+        $('#startGame').click(this.startGame)
         $('#clearArea').click(this.getClearArea)
+    },
+
+    startGame: function() {
+        tictactoe.creatingAreaGame(tictactoe.areaOfGame, tictactoe.areaOfGame)
+        $('#area .cell').on('click', tictactoe.onAreaClick)
+        $('#startGame').remove()
     },
 
     creatingAreaGame: function (areaOfGameRows, areaOfGameColumns) {
@@ -25,21 +31,24 @@ let tictactoe = {
     },
 
     onAreaClick: function () {
+        if (tictactoe.endGame) {
+            return
+        }
+
         $(this).addClass('is-cross')
 
         for (let x = 1; x <= tictactoe.areaOfGame; x++) {
             for (let y = 1; y <= tictactoe.areaOfGame; y++) {
-                if (tictactoe.isCrossAround(x, y) === tictactoe.numberOfCellsToWin) {
-                    alert("wygrana")
-                    console.log(x,y)
-                    console.log("here")
+                if (tictactoe.checkWinTime(x, y) === tictactoe.numberOfCellsToWin) {
+                    $('#winner').text("Wygrały krzyżyki")
+                    tictactoe.endGame = true
                     break
                 }
             }
         }
     },
 
-    isCrossAround: function (i, j) {
+    checkWinTime: function (i, j) {
         let firstLength = 1
         let secondLength = 1
         let thirdLength = 1

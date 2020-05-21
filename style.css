@@ -48,3 +48,9 @@ button#startGame, button#clearArea {
     /*background-image: url("/images/6626089_preview.png");*/
     transform: scale(1);
 }
+
+#winner {
+    font-size: 20px;
+    padding: 10px;
+    margin: 15px;
+}

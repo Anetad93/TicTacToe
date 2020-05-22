@@ -1,7 +1,9 @@
 let tictactoe = {
     areaOfGame: 5,
-    numberOfCellsToWin: 3,
+    numberOfCellsToWin: 4,
     cells: $('#area .cell'),
+    circleClass: 'is-circle',
+    crossClass: 'is-cross',
     theLongestLine: 0,
     endGame: false,
 
@@ -10,14 +12,27 @@ let tictactoe = {
     },
 
     registeredEvents: function () {
+        tictactoe.popUp()
+        $('#winner').on('click', 'button#playAgain' ,tictactoe.playAgain)
+    },
+
+    popUp: function () {
+
+        // $('#sighsToWin').on('change',function(){
+        //     let optionText = $("#sighsToWin option:selected").text();
+        //     alert("Selected Option Text: "+optionText);
+        // });
+
         $('#startGame').click(this.startGame)
         $('#clearArea').click(this.getClearArea)
     },
 
-    startGame: function() {
+    startGame: function () {
         tictactoe.creatingAreaGame(tictactoe.areaOfGame, tictactoe.areaOfGame)
         $('#area .cell').on('click', tictactoe.onAreaClick)
         $('#startGame').remove()
+
+        $('.popup').removeClass('active')
     },
 
     creatingAreaGame: function (areaOfGameRows, areaOfGameColumns) {
@@ -34,6 +49,7 @@ let tictactoe = {
         if (tictactoe.endGame) {
             return
         }
+        let playAgainButton = '<button id="playAgain" class="gameButtons">Zacznij grę od nowa</button>'
 
         $(this).addClass('is-cross')
 
@@ -41,6 +57,7 @@ let tictactoe = {
             for (let y = 1; y <= tictactoe.areaOfGame; y++) {
                 if (tictactoe.checkWinTime(x, y) === tictactoe.numberOfCellsToWin) {
                     $('#winner').text("Wygrały krzyżyki")
+                        .append(playAgainButton)
                     tictactoe.endGame = true
                     break
                 }
@@ -117,7 +134,7 @@ let tictactoe = {
             }
             let win = tictactoe.numberOfCellsToWin
 
-            if  (firstLength === win || secondLength === win || thirdLength === win || fourthLength === win || fifthLength === win || sixthLength === win || seventhLength === win || eighthLength === win){
+            if (firstLength === win || secondLength === win || thirdLength === win || fourthLength === win || fifthLength === win || sixthLength === win || seventhLength === win || eighthLength === win) {
                 return win
             }
             // console.log(firstLength, secondLength, thirdLength, fourthLength, fifthLength, sixthLength, seventhLength, eighthLength,i,j)
@@ -131,6 +148,11 @@ let tictactoe = {
     getClearArea: function () {
         $('.cell').removeClass("is-cross")
     },
+
+    playAgain: function () {
+        console.log("jestem")
+        location.reload()
+    }
 }
 
 tictactoe._init()

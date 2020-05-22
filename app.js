@@ -7,6 +7,7 @@ let tictactoe = {
     multiplayer: false,
     isCircle: false,
     endGame: false,
+    numberOfFilledCells: 1,
 
     _init: function () {
         this.registeredEvents()
@@ -14,7 +15,7 @@ let tictactoe = {
 
     registeredEvents: function () {
         tictactoe.popUp()
-        $('#winner').on('click', 'button#playAgain' ,tictactoe.playAgain)
+        $('#winner').on('click', 'button#playAgain', tictactoe.playAgain)
     },
 
     popUp: function () {
@@ -53,37 +54,43 @@ let tictactoe = {
         let playAgainButton = '<button id="playAgain" class="gameButtons">Play again</button>'
 
         if (!tictactoe.multiplayer) {
-            if (tictactoe.isCircle) {
-                $(this).addClass('is-circle')
-                $('#nameOfActualPlayer').text("Teraz gra gracz: Krzyżyki")
-
-                for (let x = 1; x <= tictactoe.areaOfGame; x++) {
-                    for (let y = 1; y <= tictactoe.areaOfGame; y++) {
-                        if (tictactoe.checkWinTime(x, y, tictactoe.circleClass) === tictactoe.numberOfCellsToWin) {
-                            $('#winner').text("Wygrały kółka")
-                                .append(playAgainButton)
-                            tictactoe.endGame = true
-                            break
-                        }
-                    }
-                }
-
-                tictactoe.isCircle = false
+            if (tictactoe.numberOfFilledCells === (tictactoe.areaOfGame * tictactoe.areaOfGame)) {
+                $('#winner').text("Remis")
             } else {
-                $(this).addClass('is-cross')
-                $('#nameOfActualPlayer').text("Teraz gra gracz: Kółka")
+                if (tictactoe.isCircle) {
+                    $(this).addClass('is-circle')
+                    $('#nameOfActualPlayer').text("Teraz gra gracz: Krzyżyki")
+                    tictactoe.numberOfFilledCells++
 
-                for (let x = 1; x <= tictactoe.areaOfGame; x++) {
-                    for (let y = 1; y <= tictactoe.areaOfGame; y++) {
-                        if (tictactoe.checkWinTime(x, y, tictactoe.crossClass) === tictactoe.numberOfCellsToWin) {
-                            $('#winner').text("Wygrały krzyżyki")
-                                .append(playAgainButton)
-                            tictactoe.endGame = true
-                            break
+                    for (let x = 1; x <= tictactoe.areaOfGame; x++) {
+                        for (let y = 1; y <= tictactoe.areaOfGame; y++) {
+                            if (tictactoe.checkWinTime(x, y, tictactoe.circleClass) === tictactoe.numberOfCellsToWin) {
+                                $('#winner').text("Wygrały kółka")
+                                    .append(playAgainButton)
+                                tictactoe.endGame = true
+                                break
+                            }
                         }
                     }
+
+                    tictactoe.isCircle = false
+                } else {
+                    $(this).addClass('is-cross')
+                    $('#nameOfActualPlayer').text("Teraz gra gracz: Kółka")
+                    tictactoe.numberOfFilledCells++
+
+                    for (let x = 1; x <= tictactoe.areaOfGame; x++) {
+                        for (let y = 1; y <= tictactoe.areaOfGame; y++) {
+                            if (tictactoe.checkWinTime(x, y, tictactoe.crossClass) === tictactoe.numberOfCellsToWin) {
+                                $('#winner').text("Wygrały krzyżyki")
+                                    .append(playAgainButton)
+                                tictactoe.endGame = true
+                                break
+                            }
+                        }
+                    }
+                    tictactoe.isCircle = true
                 }
-            tictactoe.isCircle = true
             }
         }
     },

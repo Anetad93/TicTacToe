@@ -7,7 +7,7 @@ let tictactoe = {
     multiplayer: false,
     isCircle: false,
     endGame: false,
-    numberOfFilledCells: 1,
+    numberOfFilledCells: 0,
 
     _init: function () {
         this.registeredEvents()
@@ -106,76 +106,53 @@ let tictactoe = {
         let eighthLength = 1
 
         if (tictactoe.getCell(i, j).hasClass(typeOfClass)) {
-            if (tictactoe.getCell(i + 1, j).hasClass(typeOfClass)) {
-                firstLength++
-                for (let k = 2; k < tictactoe.numberOfCellsToWin; k++) {
-                    if (tictactoe.getCell(i + k, j).hasClass(typeOfClass)) {
-                        firstLength++
-                    }
-                }
+            for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) { //4
+                if (tictactoe.getCell(i + k, j).hasClass(typeOfClass)) {
+                    firstLength++
+                } else break
             }
-            if (tictactoe.getCell(i, j + 1).hasClass(typeOfClass)) {
-                secondLength++
-                for (let k = 2; k < tictactoe.numberOfCellsToWin; k++) {
-                    if (tictactoe.getCell(i, j + k).hasClass(typeOfClass)) {
-                        secondLength++
-                    }
-                }
+            for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
+                if (tictactoe.getCell(i, j + k).hasClass(typeOfClass)) {
+                    secondLength++
+                } else break
             }
-            if (tictactoe.getCell(i + 1, j - 1).hasClass(typeOfClass)) {
-                thirdLength++
-                for (let k = 2; k < tictactoe.numberOfCellsToWin; k++) {
-                    if (tictactoe.getCell(i + k, j - k).hasClass(typeOfClass)) {
-                        thirdLength++
-                    }
-                }
+            for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
+                if (tictactoe.getCell(i + k, j - k).hasClass(typeOfClass)) {
+                    thirdLength++
+                } else break
             }
-            if (tictactoe.getCell(i, j - 1).hasClass(typeOfClass)) {
-                fourthLength++
-                for (let k = 2; k < tictactoe.numberOfCellsToWin; k++) {
-                    if (tictactoe.getCell(i, j - k).hasClass(typeOfClass)) {
-                        fourthLength++
-                    }
-                }
+            for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
+                if (tictactoe.getCell(i, j - k).hasClass(typeOfClass)) {
+                    fourthLength++
+                } else break
             }
-            if (tictactoe.getCell(i - 1, j).hasClass(typeOfClass)) {
-                fifthLength++
-                for (let k = 2; k < tictactoe.numberOfCellsToWin; k++) {
-                    if (tictactoe.getCell(i - k, j).hasClass(typeOfClass)) {
-                        fifthLength++
-                    }
-                }
+            for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
+                if (tictactoe.getCell(i - k, j).hasClass(typeOfClass)) {
+                    fifthLength++
+                } else break
             }
-            if (tictactoe.getCell(i - 1, j - 1).hasClass(typeOfClass)) {
-                sixthLength++
-                for (let k = 2; k < tictactoe.numberOfCellsToWin; k++) {
-                    if (tictactoe.getCell(i - k, j - k).hasClass(typeOfClass)) {
-                        sixthLength++
-                    }
-                }
+            for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
+                if (tictactoe.getCell(i - k, j - k).hasClass(typeOfClass)) {
+                    sixthLength++
+                } else break
             }
-            if (tictactoe.getCell(i - 1, j + 1).hasClass(typeOfClass)) {
-                seventhLength++
-                for (let k = 2; k < tictactoe.numberOfCellsToWin; k++) {
-                    if (tictactoe.getCell(i - k, j + k).hasClass(typeOfClass)) {
-                        seventhLength++
-                    }
-                }
+            for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
+                if (tictactoe.getCell(i - k, j + k).hasClass(typeOfClass)) {
+                    seventhLength++
+                } else break
             }
-            if (tictactoe.getCell(i + 1, j + 1).hasClass(typeOfClass)) {
-                eighthLength++
-                for (let k = 2; k < tictactoe.numberOfCellsToWin; k++) {
-                    if (tictactoe.getCell(i + k, j + k).hasClass(typeOfClass)) {
-                        eighthLength++
-                    }
-                }
+            for (let k = 1; k < tictactoe.numberOfCellsToWin; k++) {
+                if (tictactoe.getCell(i + k, j + k).hasClass(typeOfClass)) {
+                    eighthLength++
+                } else break
             }
+
             let win = tictactoe.numberOfCellsToWin
 
             if (firstLength === win || secondLength === win || thirdLength === win || fourthLength === win || fifthLength === win || sixthLength === win || seventhLength === win || eighthLength === win) {
                 return win
             }
-            // console.log(firstLength, secondLength, thirdLength, fourthLength, fifthLength, sixthLength, seventhLength, eighthLength,i,j)
+            console.log(firstLength, secondLength, thirdLength, fourthLength, fifthLength, sixthLength, seventhLength, eighthLength, typeOfClass, tictactoe.numberOfFilledCells)
         }
     },
 

@@ -42,6 +42,10 @@ button#startGame, button#clearArea {
     margin: 10px;
 }
 
+fieldset {
+    border: none;
+}
+
 #area {
     width: 550px;
     display: flex;
@@ -71,6 +75,9 @@ button#startGame, button#clearArea {
 
 #area .cell.is-circle::after {
     content: 'o';
+    font-size: 80px;
+    text-align: center;
+    justify-content: center;
     /*background-image: url("/images/circle.svg");*/
     transform: scale(1);
 }

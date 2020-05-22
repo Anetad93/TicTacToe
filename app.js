@@ -4,7 +4,8 @@ let tictactoe = {
     cells: $('#area .cell'),
     circleClass: 'is-circle',
     crossClass: 'is-cross',
-    theLongestLine: 0,
+    multiplayer: false,
+    isCircle: false,
     endGame: false,
 
     _init: function () {
@@ -49,23 +50,45 @@ let tictactoe = {
         if (tictactoe.endGame) {
             return
         }
-        let playAgainButton = '<button id="playAgain" class="gameButtons">Zacznij grę od nowa</button>'
+        let playAgainButton = '<button id="playAgain" class="gameButtons">Play again</button>'
 
-        $(this).addClass('is-cross')
+        if (!tictactoe.multiplayer) {
+            if (tictactoe.isCircle) {
+                $(this).addClass('is-circle')
+                $('#nameOfActualPlayer').text("Teraz gra gracz: Krzyżyki")
 
-        for (let x = 1; x <= tictactoe.areaOfGame; x++) {
-            for (let y = 1; y <= tictactoe.areaOfGame; y++) {
-                if (tictactoe.checkWinTime(x, y) === tictactoe.numberOfCellsToWin) {
-                    $('#winner').text("Wygrały krzyżyki")
-                        .append(playAgainButton)
-                    tictactoe.endGame = true
-                    break
+                for (let x = 1; x <= tictactoe.areaOfGame; x++) {
+                    for (let y = 1; y <= tictactoe.areaOfGame; y++) {
+                        if (tictactoe.checkWinTime(x, y, tictactoe.circleClass) === tictactoe.numberOfCellsToWin) {
+                            $('#winner').text("Wygrały kółka")
+                                .append(playAgainButton)
+                            tictactoe.endGame = true
+                            break
+                        }
+                    }
                 }
+
+                tictactoe.isCircle = false
+            } else {
+                $(this).addClass('is-cross')
+                $('#nameOfActualPlayer').text("Teraz gra gracz: Kółka")
+
+                for (let x = 1; x <= tictactoe.areaOfGame; x++) {
+                    for (let y = 1; y <= tictactoe.areaOfGame; y++) {
+                        if (tictactoe.checkWinTime(x, y, tictactoe.crossClass) === tictactoe.numberOfCellsToWin) {
+                            $('#winner').text("Wygrały krzyżyki")
+                                .append(playAgainButton)
+                            tictactoe.endGame = true
+                            break
+                        }
+                    }
+                }
+            tictactoe.isCircle = true
             }
         }
     },
 
-    checkWinTime: function (i, j) {
+    checkWinTime: function (i, j, typeOfClass) {
         let firstLength = 1
         let secondLength = 1
         let thirdLength = 1
@@ -75,59 +98,59 @@ let tictactoe = {
         let seventhLength = 1
         let eighthLength = 1
 
-        if (tictactoe.getCell(i, j).hasClass('is-cross')) {
-            if (tictactoe.getCell(i + 1, j).hasClass('is-cross')) {
+        if (tictactoe.getCell(i, j).hasClass(typeOfClass)) {
+            if (tictactoe.getCell(i + 1, j).hasClass(typeOfClass)) {
                 for (let k = 0; k < tictactoe.numberOfCellsToWin; k++) {
-                    if (tictactoe.getCell(i + k, j).hasClass('is-cross') && tictactoe.getCell(i + k + 1, j).hasClass('is-cross')) {
+                    if (tictactoe.getCell(i + k, j).hasClass(typeOfClass) && tictactoe.getCell(i + k + 1, j).hasClass(typeOfClass)) {
                         firstLength++
                     }
                 }
             }
-            if (tictactoe.getCell(i, j + 1).hasClass('is-cross')) {
+            if (tictactoe.getCell(i, j + 1).hasClass(typeOfClass)) {
                 for (let k = 0; k < tictactoe.numberOfCellsToWin; k++) {
-                    if (tictactoe.getCell(i, j + k).hasClass('is-cross') && tictactoe.getCell(i, j + k + 1).hasClass('is-cross')) {
+                    if (tictactoe.getCell(i, j + k).hasClass(typeOfClass) && tictactoe.getCell(i, j + k + 1).hasClass(typeOfClass)) {
                         secondLength++
                     }
                 }
             }
-            if (tictactoe.getCell(i + 1, j - 1).hasClass('is-cross')) {
+            if (tictactoe.getCell(i + 1, j - 1).hasClass(typeOfClass)) {
                 for (let k = 0; k < tictactoe.numberOfCellsToWin; k++) {
-                    if (tictactoe.getCell(i + k, j - k).hasClass('is-cross') && tictactoe.getCell(i + k + 1, j - k - 1).hasClass('is-cross')) {
+                    if (tictactoe.getCell(i + k, j - k).hasClass(typeOfClass) && tictactoe.getCell(i + k + 1, j - k - 1).hasClass(typeOfClass)) {
                         thirdLength++
                     }
                 }
             }
-            if (tictactoe.getCell(i, j - 1).hasClass('is-cross')) {
+            if (tictactoe.getCell(i, j - 1).hasClass(typeOfClass)) {
                 for (let k = 0; k < tictactoe.numberOfCellsToWin; k++) {
-                    if (tictactoe.getCell(i, j - k).hasClass('is-cross') && tictactoe.getCell(i, j - k - 1).hasClass('is-cross')) {
+                    if (tictactoe.getCell(i, j - k).hasClass(typeOfClass) && tictactoe.getCell(i, j - k - 1).hasClass(typeOfClass)) {
                         fourthLength++
                     }
                 }
             }
-            if (tictactoe.getCell(i - 1, j).hasClass('is-cross')) {
+            if (tictactoe.getCell(i - 1, j).hasClass(typeOfClass)) {
                 for (let k = 0; k < tictactoe.numberOfCellsToWin; k++) {
-                    if (tictactoe.getCell(i - k, j).hasClass('is-cross') && tictactoe.getCell(i - k - 1, j).hasClass('is-cross')) {
+                    if (tictactoe.getCell(i - k, j).hasClass(typeOfClass) && tictactoe.getCell(i - k - 1, j).hasClass(typeOfClass)) {
                         fifthLength++
                     }
                 }
             }
-            if (tictactoe.getCell(i - 1, j - 1).hasClass('is-cross')) {
+            if (tictactoe.getCell(i - 1, j - 1).hasClass(typeOfClass)) {
                 for (let k = 0; k < tictactoe.numberOfCellsToWin; k++) {
-                    if (tictactoe.getCell(i - k, j - k).hasClass('is-cross') && tictactoe.getCell(i - k - 1, j - k - 1).hasClass('is-cross')) {
+                    if (tictactoe.getCell(i - k, j - k).hasClass(typeOfClass) && tictactoe.getCell(i - k - 1, j - k - 1).hasClass(typeOfClass)) {
                         sixthLength++
                     }
                 }
             }
-            if (tictactoe.getCell(i - 1, j + 1).hasClass('is-cross')) {
+            if (tictactoe.getCell(i - 1, j + 1).hasClass(typeOfClass)) {
                 for (let k = 0; k < tictactoe.numberOfCellsToWin; k++) {
-                    if (tictactoe.getCell(i - k, j + k).hasClass('is-cross') && tictactoe.getCell(i - k - 1, j + k + 1).hasClass('is-cross')) {
+                    if (tictactoe.getCell(i - k, j + k).hasClass(typeOfClass) && tictactoe.getCell(i - k - 1, j + k + 1).hasClass(typeOfClass)) {
                         seventhLength++
                     }
                 }
             }
-            if (tictactoe.getCell(i + 1, j + 1).hasClass('is-cross')) {
+            if (tictactoe.getCell(i + 1, j + 1).hasClass(typeOfClass)) {
                 for (let k = 0; k < tictactoe.numberOfCellsToWin; k++) {
-                    if (tictactoe.getCell(i + k, j + k).hasClass('is-cross') && tictactoe.getCell(i + k + 1, j + k + 1).hasClass('is-cross')) {
+                    if (tictactoe.getCell(i + k, j + k).hasClass(typeOfClass) && tictactoe.getCell(i + k + 1, j + k + 1).hasClass(typeOfClass)) {
                         eighthLength++
                     }
                 }
@@ -150,7 +173,6 @@ let tictactoe = {
     },
 
     playAgain: function () {
-        console.log("jestem")
         location.reload()
     }
 }
